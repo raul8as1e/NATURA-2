@@ -37,22 +37,24 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex items-center justify-center mb-4">
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader className="text-center space-y-4">
+          <div className="flex items-center justify-center">
             <div className="bg-emerald-600 text-white rounded-full p-3">
               <Leaf className="h-8 w-8" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-emerald-800">
-            Panel de Administración
-          </CardTitle>
-          <p className="text-gray-600">
-            Natura Revista - Acceso restringido
-          </p>
+          <div>
+            <CardTitle className="text-2xl font-bold text-emerald-800">
+              Panel de Administración
+            </CardTitle>
+            <p className="text-gray-600 mt-2">
+              Natura Revista - Acceso restringido
+            </p>
+          </div>
         </CardHeader>
         
-        <CardContent>
+        <CardContent className="space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
@@ -103,16 +105,6 @@ const AdminLogin = () => {
               {isLoading ? "Verificando..." : "Iniciar Sesión"}
             </Button>
           </form>
-          
-          <div className="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
-            <p className="text-sm text-emerald-800 font-medium mb-2">
-              🔐 Credenciales de Demo:
-            </p>
-            <p className="text-sm text-emerald-700">
-              <strong>Usuario:</strong> admin<br />
-              <strong>Contraseña:</strong> natura2024
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
