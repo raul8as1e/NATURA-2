@@ -5,23 +5,98 @@ import HomePage from "./pages/HomePage";
 import HerbDirectory from "./pages/HerbDirectory";
 import Recipes from "./pages/Recipes";
 import Benefits from "./pages/Benefits";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./components/AdminLogin";
 import Navbar from "./components/Navbar";
 import { Toaster } from "./components/ui/toaster";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
-function App() {
+// Componente protegido para rutas de admin
+const ProtectedAdminRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600"></div>
+      </div>
+    );
+  }
+
+  return isAuthenticated ? children : <AdminLogin />;
+};
+
+// Componente principal de la aplicación
+const AppContent = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="App min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/hierbas" element={<HerbDirectory />} />
-          <Route path="/recetas" element={<Recipes />} />
-          <Route path="/beneficios" element={<Benefits />} />
+          {/* Rutas públicas */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <HomePage />
+              </>
+            }
+          />
+          <Route
+            path="/hierbas"
+            element={
+              <>
+                <Navbar />
+                <HerbDirectory />
+              </>
+            }
+          />
+          <Route
+            path="/recetas"
+            element={
+              <>
+                <Navbar />
+                <Recipes />
+              </>
+            }
+          />
+          <Route
+            path="/beneficios"
+            element={
+              <>
+                <Navbar />
+                <Benefits />
+              </>
+            }
+          />
+          
+          {/* Rutas de administración */}
+          <Route
+            path="/admin/login"
+            element={<AdminLogin />}
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedAdminRoute>
+                <AdminDashboard />
+              </ProtectedAdminRoute>
+            }
+          />
         </Routes>
         <Toaster />
       </BrowserRouter>
     </div>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

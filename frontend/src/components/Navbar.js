@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Leaf, Menu, X } from "lucide-react";
+import { Leaf, Menu, X, Settings } from "lucide-react";
 import { Button } from "./ui/button";
+import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +62,25 @@ const Navbar = () => {
                 )}
               </Link>
             ))}
+            
+            {/* Admin Access */}
+            {isAuthenticated ? (
+              <Link
+                to="/admin"
+                className="flex items-center space-x-1 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+              >
+                <Settings className="h-4 w-4" />
+                <span>Admin</span>
+              </Link>
+            ) : (
+              <Link
+                to="/admin/login"
+                className="flex items-center space-x-1 text-sm font-medium text-gray-600 hover:text-emerald-600 transition-colors"
+              >
+                <Settings className="h-4 w-4" />
+                <span>Admin</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -90,6 +111,16 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {/* Mobile Admin Access */}
+            <Link
+              to={isAuthenticated ? "/admin" : "/admin/login"}
+              className="flex items-center space-x-2 py-2 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors border-t border-gray-200 mt-2 pt-4"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Settings className="h-4 w-4" />
+              <span>Panel Admin</span>
+            </Link>
           </div>
         )}
       </div>
