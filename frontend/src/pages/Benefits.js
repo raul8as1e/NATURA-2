@@ -16,7 +16,7 @@ const Benefits = () => {
   const getCategoryIcon = (category) => {
     switch (category) {
       case "Sistema Digestivo": return <Heart className="h-8 w-8 text-orange-600" />;
-      case "Sistema Respiratorio": return <Lung className="h-8 w-8 text-blue-600" />;
+      case "Sistema Respiratorio": return <Wind className="h-8 w-8 text-blue-600" />;
       case "Sistema Nervioso": return <Brain className="h-8 w-8 text-purple-600" />;
       case "Cuidado de la Piel": return <Shield className="h-8 w-8 text-green-600" />;
       default: return <Heart className="h-8 w-8 text-emerald-600" />;
